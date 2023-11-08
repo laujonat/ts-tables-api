@@ -1,6 +1,10 @@
 ## Coding test
 
-This repository contains a small application that consumes test score data and exposes the data via a REST API.  Your job is to build a UI on top of the API, based on provided wireframes.
+**Note**
+
+> Writeup can be found in [UI README](src/ui/README.md)
+
+This repository contains a small application that consumes test score data and exposes the data via a REST API. Your job is to build a UI on top of the API, based on provided wireframes.
 
 #### About the application
 
@@ -16,7 +20,7 @@ The data is exposed via the following REST API:
 #### Extending the application
 
 We'd like you to build a UI on top of the existing API, allowing a user to browse the list of exams.
-While design is important to us,  we don't expect you to be a designer so we we're not looking for you to fill in the visual design details.
+While design is important to us, we don't expect you to be a designer so we we're not looking for you to fill in the visual design details.
 However, we do expect you to be able to craft an intuitive and friendly user experience.
 
 We've provided a wireframe for these two views below: an exam list view and an exam detail view.
@@ -27,33 +31,37 @@ We primarily use React and Redux to build the LaunchDarkly front-end.
 However, there are a lot of tools, libraries, and frameworks out there these days for front-end web development, and it's our experience that good developers can easily pick up new frameworks.
 To create a more level playing field for all applicants and to allow us to more easily compare solutions, we have a few restrictions on what 3rd-party libraries can be used:
 
-* The solution only needs to work in modern browsers (one or both of latest Chrome/Firefox)
-* No JavaScript frameworks are allowed (React, Angular, etc). The solution should be achievable with modern vanilla JS
-  * JS variants such as Typescript are allowed
-  * Polyfills are allowed
-  * Babel is allowed
-* No CSS frameworks are allowed (Bootstrap, Bulma, etc)
-  * Pre/post processors such as LESS, SASS, or PostCSS are allowed
-  * Resets/normalizers are allowed
+- The solution only needs to work in modern browsers (one or both of latest Chrome/Firefox)
+- No JavaScript frameworks are allowed (React, Angular, etc). The solution should be achievable with modern vanilla JS
+  - JS variants such as Typescript are allowed
+  - Polyfills are allowed
+  - Babel is allowed
+- No CSS frameworks are allowed (Bootstrap, Bulma, etc)
+  - Pre/post processors such as LESS, SASS, or PostCSS are allowed
+  - Resets/normalizers are allowed
 
 #### Running the application
 
 Install Yarn
+
 ```
 https://yarnpkg.com/en/docs/install
 ```
 
 Run Yarn to install dependencies
+
 ```sh
 $ yarn
 ```
 
 Running the app (note that you'll need _at least_ Node v9.x)
+
 ```sh
 $ yarn start
 ```
 
 Running the tests
+
 ```sh
 $ yarn test
 ```
@@ -79,6 +87,7 @@ the next stage of the interview process.
 You will work with one or two people from our team to build some extensions on top of your solution. This gives us an opportunity to work through a few problems together.
 
 Here are a few tips so you know what to expect:
+
 - Be prepared to walk someone through your solution.
 - Think about a couple of ways you could improve your solution.
 - You will have access to all the tools you would normally have access to on the job.
