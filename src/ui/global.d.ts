@@ -22,6 +22,13 @@ interface ExamResult {
   examId: number;
   score: number;
 }
+
+interface StudentResult {
+  studentId: number;
+  score: number;
+  rank?: number;
+}
+
 // Type single exam's data.
 interface ExamData {
   id: number;
@@ -31,4 +38,9 @@ interface ExamData {
 
 interface ExamsEventDetail {
   exams: ExamData[];
+}
+
+interface ExamResultDetail {
+  results: StudentResult[];
+  average: number;
 }

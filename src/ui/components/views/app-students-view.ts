@@ -1,9 +1,5 @@
 import { loadComponent } from '../../utils/registry.js';
 
-const stylesheet = new CSSStyleSheet();
-// stylesheet.replaceSync(`.navbar { /** */ }`);
-
-// Placeholder component. It is neither a consumer or producer of events
 export default class AppStudentsView extends HTMLElement {
   private childComponentsPromise?: Promise<void[]>;
   adoptedStyleSheets: readonly CSSStyleSheet[];
@@ -57,3 +53,5 @@ export default class AppStudentsView extends HTMLElement {
     return template;
   }
 }
+const stylesheet = new CSSStyleSheet();
+// stylesheet.replaceSync(`.navbar { /** */ }`);

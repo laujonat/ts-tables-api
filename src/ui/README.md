@@ -17,3 +17,8 @@ requestStudentsData
 
 requestExamResults
 requestStudentById
+
+
+Files
+
+Styles are defined at the bottom

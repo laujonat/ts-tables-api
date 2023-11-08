@@ -1,18 +1,3 @@
-const stylesheet = new CSSStyleSheet();
-stylesheet.replaceSync(/* css */ `
-    footer {
-        padding: 1em;
-        background-color: #f8f9fa;
-        text-align: center;
-        font-family: Arial, sans-serif;
-    }
-
-    .attribution {
-        margin-top: 1em;
-        font-size: 0.8em;
-    }
-`);
-
 export default class AppFooter extends HTMLElement {
   adoptedStyleSheets: readonly CSSStyleSheet[];
 
@@ -36,7 +21,7 @@ export default class AppFooter extends HTMLElement {
         <footer>
             <div class="container">
                 <span class="attribution">
-                    ❤️
+                    🔎 launchdarkly/fe-coding-test-Jonathan-Lau
                 </span>
             </div>
         </footer>
@@ -44,3 +29,18 @@ export default class AppFooter extends HTMLElement {
     return template;
   }
 }
+
+const stylesheet = new CSSStyleSheet();
+stylesheet.replaceSync(/* css */ `
+    footer {
+        padding: 1em;
+        background-color: #f8f9fa;
+        text-align: center;
+        font-family: monospace;
+    }
+
+    .attribution {
+        margin-top: 1em;
+        font-size: 0.8em;
+    }
+`);

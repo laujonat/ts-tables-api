@@ -19,27 +19,47 @@ export default class AppEvents extends HTMLElement {
     this.abortController = new AbortController();
   }
 
-  getStudents(): void {
-    const url = `${this.baseApiUrl}/students`;
-    this.makeFetchRequest(url, 'eb-requestStudentsData', '#/students');
-  }
-
+  /**
+   * @event requestExamsData
+   *   The event that triggers this method. It should be dispatched by
+   *   consumers when they require the exam data.
+   *
+   * @emits eb-examsData
+   * The event's `detail` property contains the fetched exam data.
+   */
   getExams(): void {
     const url = `${this.baseApiUrl}/exams`;
     this.makeFetchRequest(url, 'eb-examsData', '#/exams');
   }
 
+  /**
+   * @event requestStudentsData
+   * @emits eb-requestStudentsData
+   */
+  getStudents(): void {
+    const url = `${this.baseApiUrl}/students`;
+    this.makeFetchRequest(url, 'eb-requestStudentsData', '#/students');
+  }
+
+  /**
+   * @event requestStudentById
+   * @emits eb-studentById
+   */
   getStudentById(studentId: number): void {
     const url = `${this.baseApiUrl}/students/${studentId}`;
     this.makeFetchRequest(url, 'eb-studentById');
   }
 
+  /**
+   * @event requestExamResultsById
+   * @emits eb-examResults
+   */
   getExamResultsById(examId: number): void {
-    const url = `${this.baseApiUrl}/exams/${examId}/results`;
-    this.makeFetchRequest(url, 'eb-examResults');
+    const url = `${this.baseApiUrl}/exams/${examId}`;
+    this.makeFetchRequest(url, 'eb-examResults', `#/exams/${examId}`);
   }
 
-  private makeFetchRequest<T>(
+  private makeFetchRequest(
     url: string,
     eventName: string,
     hashChange?: string
@@ -87,7 +107,6 @@ export default class AppEvents extends HTMLElement {
   }
 
   disconnectedCallback() {
-    // Now you can properly remove the exact same function references
     this.removeEventListener('requestExamsData', this.handleRequestExamsData);
     this.removeEventListener(
       'requestStudentsData',

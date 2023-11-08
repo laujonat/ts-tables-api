@@ -26,6 +26,10 @@ export class RouterHandler {
   }
 
   private handleHashChange(): void {
+    console.group('hashchange event');
+    console.info(new Date().toLocaleTimeString());
+    console.info(window.location.hash);
+    console.groupEnd();
     this.route(window.location.hash);
   }
 
