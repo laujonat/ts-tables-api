@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "outDir": "../static/js",
+    "rootDir": "./",
+    "removeComments": true,
+    "isolatedModules": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "./components/**/*.ts",
+    "components/views/**/*.ts",
+    "./router/**/*.ts",
+    "./utils/**/*.ts",
+    "global.d.ts",
+    "index.ts"
+  ],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}

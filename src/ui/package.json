@@ -1,0 +1,28 @@
+{
+  "name": "components",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "prettier": "prettier --write .",
+    "prettier-check": "prettier --check .",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "serve dist",
+    "dev": "concurrently \"yarn watch\" \"serve dist --no-clipboard\""
+  },
+  "engines": {
+    "node": ">=9.0.0",
+    "yarn": "^1.0.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "prettier": "^3.0.3",
+    "serve": "^14.2.1"
+  }
+}
