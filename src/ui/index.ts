@@ -47,6 +47,16 @@ class AppConfig {
     };
   }
 
+  /**
+   * Extracts the exam ID from the window location hash
+   *
+   * @returns {string | null} The extracted exam ID or null if not present
+   */
+  get getExamIdFromHash(): string {
+    const examIdMatch = window.location.hash.match(/^#\/exams\/(\w+)/);
+    return examIdMatch ? window.location.href.split('/').reverse()[0] : '';
+  }
+
   get slug() {
     const urlEnding = this.urlEnding;
     if (urlEnding && urlEnding[0].match(/.*-[a-z0-9]{1,100}$/))

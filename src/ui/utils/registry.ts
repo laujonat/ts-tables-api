@@ -1,5 +1,4 @@
 export default class ComponentRegistry {
-  // Use the ComponentRegistration interface to type the components array
   static register(components: IComponentRegistration[]) {
     components.forEach(component => {
       console.log(component);

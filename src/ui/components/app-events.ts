@@ -56,13 +56,25 @@ export default class AppEvents extends HTMLElement {
    */
   getExamResultsById(examId: number): void {
     const url = `${this.baseApiUrl}/exams/${examId}`;
-    this.makeFetchRequest(url, 'eb-examResults', `#/exams/${examId}`);
+    this.makeFetchRequest(url, 'eb-examResults', `#/exams/${examId}`, {
+      examId,
+    });
   }
 
+  /**
+   * Make a fetch request to the provided URL and dispatch a custom event
+   * with the response data. Abort any previous pending requests before
+   * making the new request.
+   *
+   * @param url - The URL to make the fetch request to
+   * @param eventName - The name of the custom event to dispatch with the response data
+   * @param hashChange - Optional URL hash to change to after fetching data
+   */
   private makeFetchRequest(
     url: string,
     eventName: string,
-    hashChange?: string
+    hashChange?: string,
+    additionalParams?: {}
   ): void {
     this.abortPreviousRequest();
     fetch(url, {
@@ -71,11 +83,13 @@ export default class AppEvents extends HTMLElement {
     })
       .then(response => response.json())
       .then(data => {
-        console.group(`CustomEvent ${eventName}`);
+        console.group(`Emitting CustomEvent ${eventName}`);
         console.log(`${eventName} data`, data);
         console.groupEnd();
         document.body.dispatchEvent(
-          new CustomEvent(eventName, { detail: data })
+          new CustomEvent(eventName, {
+            detail: { ...data, ...additionalParams },
+          })
         );
         if (hashChange && window.location.hash !== hashChange) {
           window.location.hash = hashChange;

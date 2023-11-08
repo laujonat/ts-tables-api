@@ -1,8 +1,10 @@
 import { App } from '../../index.js';
 
 /**
- * AppView custom element class - Event Consumer.
- * Listens for router path change events and decides which component to display.
+ * AppViewToggle component class - Event Producer.
+ *
+ * Handles toggling between the Exams and Students views.
+ * Dispatches custom events to fetch data for the active view.
  */
 export default class AppViewToggle extends HTMLElement {
   adoptedStyleSheets: readonly CSSStyleSheet[];

@@ -43,4 +43,5 @@ interface ExamsEventDetail {
 interface ExamResultDetail {
   results: StudentResult[];
   average: number;
+  examId?: number | string;
 }

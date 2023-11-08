@@ -1,3 +1,12 @@
+/**
+ * AppTable custom element class - Event Consumer
+ *
+ * Renders tabular data with column headers.
+ * Allows clicking on rows to trigger a callback.
+ *
+ * Provides methods to set the table data for exams or exam results.
+ * Handles sorting, ranking, and formatting the exam result data.
+ */
 export default class AppTable extends HTMLElement {
   private shadow: ShadowRoot;
   private columns: Array<{ key: string; label: string }>;
@@ -75,7 +84,7 @@ export default class AppTable extends HTMLElement {
   }
 
   render(): void {
-    console.log('items', this.items);
+    // console.log('items', this.items);
     const tableContent = this.items
       .map((item: any) => {
         return `<tr>${this.columns
