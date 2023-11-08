@@ -26,10 +26,10 @@ export class RouterHandler {
   }
 
   private handleHashChange(): void {
-    console.group('hashchange event');
-    console.info(new Date().toLocaleTimeString());
-    console.info(window.location.hash);
-    console.groupEnd();
+    // console.group('hashchange event');
+    // console.info(new Date().toLocaleTimeString());
+    // console.info(window.location.hash);
+    // console.groupEnd();
     this.route(window.location.hash);
   }
 
@@ -45,7 +45,7 @@ export class RouterHandler {
       const module = await import(route.path);
       customElements.define(route.name, module.default);
     }
-    console.info('loading custom element->', route.name, route.path);
+    // console.info('loading custom element->', route.name, route.path);
 
     const newComponent = document.createElement(route.name);
     this.updateView(newComponent);
@@ -53,7 +53,6 @@ export class RouterHandler {
 
   private updateView(component: HTMLElement): void {
     this.currentComponent = component;
-    console.info('updating view', this.currentComponent);
     document.dispatchEvent(
       new CustomEvent('router-update', { detail: { component } })
     );
