@@ -1,6 +1,7 @@
 import process from 'process';
 
+// Must be https!
 export function testScoreUrl() {
   return process.env.TEST_SCORE_URL ||
-    'http://live-test-scores.herokuapp.com/scores';
+    'https://live-test-scores.herokuapp.com/scores';
 }
