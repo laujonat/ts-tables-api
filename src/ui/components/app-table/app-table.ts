@@ -135,6 +135,7 @@ stylesheet.replaceSync(/* inline-css */ `
     // border: 1px solid var(--middle-grey);
     padding: 8px;
     text-align: left;
+	cursor: pointer;
   }
 
   th {

@@ -1,125 +1,144 @@
-## Coding test
+## Overview
 
-**Note**
+This is a sample project using TypeScript and an event-driven approach.
 
-> Writeup can be found in [UI README](src/ui/README.md)
+| Screen 1                         | Screen 2                            |
+| -------------------------------- | ----------------------------------- |
+| ![view-1-exam-list](image-2.png) | ![view-2-exam-details](image-1.png) |
 
-This repository contains a small application that consumes test score data and exposes the data via a REST API. Your job is to build a UI on top of the API, based on provided wireframes.
+## Requirements Checklist
 
-#### About the application
+- [x] We should be able to run it using the instructions in this README.
+- [x] The exam list and detail views should display data from the API properly based on the wireframe above.
+- [x] The user experience should be intuitive and user-friendly.
+- [x] Your solution must respect the constraints above.
 
-The application consumes data from `https://live-test-scores.herokuapp.com/scores`, using the [Server-Sent Events](https://html.spec.whatwg.org/multipage/server-sent-events.html#server-sent-events) protocol and stores the results in memory. This means that there is no data on start up, and test scores will stream in over time.
+### Misc. Implementations
 
-The data is exposed via the following REST API:
+- Typescript setup
+- Prettier configuration
+- Script configuration
 
-1. `/api/v1/students` lists all students that have received at least one test score
-2. `/api/v1/students/{id}` lists the test results for the specified student, and provides the student's average score across all exams
-3. `/api/v1/exams` lists all the exams that have been recorded
-4. `/api/v1/exams/{number}` lists all the results for the specified exam, and provides the average score across all students
+## Architecture
 
-#### Extending the application
+The frontend is built using Web Components and custom elements to encapsulate logic and markup. TypeScript provides type safety and tooling.
 
-We'd like you to build a UI on top of the existing API, allowing a user to browse the list of exams.
-While design is important to us, we don't expect you to be a designer so we we're not looking for you to fill in the visual design details.
-However, we do expect you to be able to craft an intuitive and friendly user experience.
+### Event Flow
 
-We've provided a wireframe for these two views below: an exam list view and an exam detail view.
+An event-driven architecture with producers, broker, and consumers is used for loose coupling. Key components are:
 
-![Exams UI Wireframe](wireframe.png)
+- `app-events` - Event broker that fetches data and dispatches events
+- `app-router` - Event consumer that listens for navigation and renders views.
+- `app-view-toggle` - Event producer that emits custom events to fetch data for the active view.
 
-We primarily use React and Redux to build the LaunchDarkly front-end.
-However, there are a lot of tools, libraries, and frameworks out there these days for front-end web development, and it's our experience that good developers can easily pick up new frameworks.
-To create a more level playing field for all applicants and to allow us to more easily compare solutions, we have a few restrictions on what 3rd-party libraries can be used:
+#### Client Router
 
-- The solution only needs to work in modern browsers (one or both of latest Chrome/Firefox)
-- No JavaScript frameworks are allowed (React, Angular, etc). The solution should be achievable with modern vanilla JS
-  - JS variants such as Typescript are allowed
-  - Polyfills are allowed
-  - Babel is allowed
-- No CSS frameworks are allowed (Bootstrap, Bulma, etc)
-  - Pre/post processors such as LESS, SASS, or PostCSS are allowed
-  - Resets/normalizers are allowed
+- `app-router` - Client side router implementation. Component is implemented as view outlet. Listens for event `router-change` to determine which view to display.
+  - `RouterHandler` - Events are handled in RouterHandler class instance. It listens for changes to window url to
 
-#### Running the application
+#### Event Broker
 
-Install Yarn
+- `app-events` - listens and fetches data, then dispatches examsDataLoaded
 
+Example:
+
+```js
+ /**
+   * Example usage
+   * Fetches exam data from the API and emits a custom event with the data.
+   *
+   * @fires AppEvents#eb-examsData - Emits event with exams data payload.
+   */
+  private async fetchExamsData(): Promise<void> {
+    const url = `${this.baseApiUrl}/exams`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const examsData = await response.json();
+
+      // Emitting a custom event with the exams data.
+      this.dispatchEvent(new CustomEvent('eb-examsData', {
+        detail: examsData,
+        bubbles: true,
+        composed: true,
+      }));
+    } catch (error) {
+      console.error('Failed to fetch exams data:', error);
+      // Handle error state appropriately
+    }
+  }
+
+
+  // Example of dispatching a request for exams data from a producer
+  document.dispatchEvent(new CustomEvent('requestExamsData'));
 ```
-https://yarnpkg.com/en/docs/install
-```
 
-Run Yarn to install dependencies
+#### Event Producer
 
-```sh
-$ yarn
-```
+- `app-view-toggle` - listens and renders the app-exams-view
 
-Running the app (note that you'll need _at least_ Node v9.x)
+#### Views
 
-```sh
-$ yarn start
-```
+- `app-exams-view` - Renders the Exams view UI and handles exam data events.
+- `app-students-view` - Not implemented, placeholder component for /students
+  This decouples the data loading from the view rendering.
 
-Running the tests
+## UX Considerations
 
-```sh
-$ yarn test
-```
+### Lazy-loading
 
-By default the application starts up at `http://localhost:4000`
+In the entry initialization of the app, consideration for user experience is taken into account by preloading components that are not dependent on data fetch operations, such as `app-header` and `app-footer`.
 
-#### Submitting your solution
+These elements typically contain static information and good for giving the user a sense of immediate interaction and feedback when they load the application. By ensuring that these components are loaded first, users are presented with a complete frame of the application UI, thus enhancing the perceived performance of the app and contributing to a seamless user experience.
 
-When you're done, commit your solution and push it to this GitHub repository. You can submit the repository url using the Greenhouse link we emailed you.
+The initialize method uses `Promise.all` to load these components in parallel, further optimizing the loading time and ensuring that the structural components of the UI are rendered as quickly as possible, regardless of the status of data-dependent components or network latency in fetching dynamic content.
 
-Your solution must meet the following requirements:
+### Table Accessibility
 
-- We should be able to run it using the instructions in this README.
-- The exam list and detail views should display data from the API properly based on the wireframe above.
-- The user experience should be intuitive and user-friendly.
-- Your solution must respect the constraints above.
+Considerations for mouse events considered for interactive elements such as the side navigation and table rows.
 
-#### What is the next step?
+## TypeScript
 
-One we have reviewed your solution, we will reach back out to you and set up a time for
-the next stage of the interview process.
+The TypeScript project is configured in tsconfig.json.
 
-You will work with one or two people from our team to build some extensions on top of your solution. This gives us an opportunity to work through a few problems together.
+- Components are authored in .ts files.
+- `tsc` compiles to .js files in static/js folder.
+- Build is run on yarn build script.
 
-Here are a few tips so you know what to expect:
+## Project Structure
 
-- Be prepared to walk someone through your solution.
-- Think about a couple of ways you could improve your solution.
-- You will have access to all the tools you would normally have access to on the job.
+- `/static/index.html` - Entry point that loads index.js
+- `index.ts` - Bootstraps the app by loading `app-events` and `app-router` and
+- `components/` - Web components for UI
+- `views/` - Top level view components
 
-#### Frequently asked questions
+## Conclusion
 
-##### What is the expected amount of time I should spend on this?
+This architecture allows for a scalable and maintainable frontend by decoupling concerns into reusable components with typed interfaces. The eventing scheme reduces direct dependencies between components.
 
-We fully respect and understand that circumstances are different for everyone.
+## Areas for Improvement
 
-We recommend that you spend around 3 hours. If you are not able to complete any of the required steps from the "Submitting your solution" section above, send us a note when you submit your solution.
+- Browser `popstate` has some issues. We can address this by adding an event listener for window `popstate` event. It would look something like this:
+  1. Listens for the browser's popstate event to handle browser navigation (e.g., back/forward).
+  1. Listens for click events on anchor tags to intercept navigation requests.
+  1. 1 Uses the history.pushState method to update the URL without a page reload.
+  1. 1 Dispatches a custom `router-change` event that the `app-router` component can listen for to update the displayed view.
+- Add loading indicators for page "busy" operations
+- Keyboard navigation for accessibility
+- Missing tests - tbd
 
-##### Should I zip up my code or push to this GitHub repository?
+### Misc Notes
 
-Please commit your code and push it to this repository. You can submit the repository url using the Greenhouse link we emailed you.
+**_Updating the UI after the initial API request was not addressed as stated in the project README._**
 
-##### Will the data always be valid? Will the payload always contain a JSON object with the required 3 properties with valid values?
+- To use the application and ensure that the UI displays the most current data:
 
-Yes.
-
-##### Do I need to implement the student views?
-
-No, only the exam views are required.
-
-##### The instructions say that "test scores will stream in over time". Do I need to automatically update the page as new API data arrives?
-
-No, updating the UI after the initial API request is not required.
-
-##### Do I need to implement pagination for the exam and/or student list views?
-
-No, pagination is not required.
-
-##### Is it OK to use a client-side router to make things easier?
-
-That's OK. Please mention that in your README for the reviewer.
+- Navigate through the application
+  - The UI updates automatically whenever you change the path. This is because the app-router listens for changes in the URL and triggers the relevant components to update the view.
+  - Refresh data manually: If you need the latest data for exams, simply click on the "Exams" tab.
+    This action emits a `requestExamsData` event, which the `app-events` component listens for.
+  - Upon detecting this event, `app-events` fetches the most recent data from the API and dispatches an `eb-examsData` event.
+  - The UI components responsible for displaying exam data listen for this event and update the view accordingly with the new data.

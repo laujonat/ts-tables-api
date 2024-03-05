@@ -206,7 +206,7 @@ stylesheet.replaceSync(/* css */ `
       font-size: x-small;
     }
     /* Interactive styles */
-    .nav-item:hover { background-color: var(--hover-bg-active);}
+    .nav-item:hover { background-color: var(--hover-bg-active); cursor:pointer;}
     .nav-item:hover .circle {
       background-color: var(--hover-color-active);
     }

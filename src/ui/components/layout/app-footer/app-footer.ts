@@ -20,9 +20,7 @@ export default class AppFooter extends HTMLElement {
     const template = /* html */ `
         <footer>
             <div class="container">
-                <span class="attribution">
-                    🔎 launchdarkly/fe-coding-test-Jonathan-Lau
-                </span>
+                // Placeholder
             </div>
         </footer>
     `;
